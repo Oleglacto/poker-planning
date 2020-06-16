@@ -1,2 +1,2 @@
 # Poker planning for scrum
-## Project bused on Swoole
+## Project based on Swoole
