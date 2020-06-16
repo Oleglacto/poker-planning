@@ -5,8 +5,8 @@ map $http_upgrade $connection_upgrade {
 
 
 upstream swoole {
-    server 127.0.0.1:1215 weight=5 max_fails=3 fail_timeout=30s;
-    keepalive 16;
+    server 127.0.0.1:1215;
+    keepalive 5;
 }
 
 server {
@@ -27,9 +27,10 @@ server {
 
     sendfile off;
 
-    location = /assets/ {
-	sendfile on;
-    }
+    gzip on;
+    gzip_disable "msie6";
+    gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript application/javascript;
+
 
     location = /index.php {
         # Ensure that there is no such file named "not_exists"
@@ -83,8 +84,8 @@ server {
         proxy_set_header Server-Port $server_port;
         proxy_pass http://swoole;
     }
- 
-   location ~ /\.ht {
+
+    location ~ /\.ht {
         deny all;
     }
 
